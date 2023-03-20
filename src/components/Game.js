@@ -1,5 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Card from "./Card";
+
+const AUTH_ENDPOINT =
+	"https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
+const TOKEN_KEY = "whos-who-access-token";
 
 const Game = ({ token, genres }) => {
 	// Game state constants
@@ -15,7 +20,7 @@ const Game = ({ token, genres }) => {
 	const [score, setScore] = useState(0);
 	const [lives, setLives] = useState(3);
 	const [selectedArtist, setSelectedArtist] = useState(null);
-	const [gameState, setGameState] = DEFAULT;
+	const [gameState, setGameState] = useState(DEFAULT);
 
 	return (
 		<Wrapper>
