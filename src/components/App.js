@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Game from "./Game";
 
 import Home from "./Home";
+import Landing from "./Landing";
 
 const App = () => {
 	const [token, setToken] = useState(null);
@@ -60,7 +61,7 @@ const App = () => {
 	return (
 		<div>
 			<Switch>
-				<Route exact path="/" component={Home} />
+				<Route exact path="/" component={Landing} />
 				<Route path="/play">
 					<Game token={token} genres={genres} />
 				</Route>
