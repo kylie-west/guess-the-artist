@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import Game from "./Game";
 
 import Home from "./Home";
 
@@ -58,7 +59,12 @@ const App = () => {
 
 	return (
 		<div>
-			<Route exact path="/" component={Home} />
+			<Switch>
+				<Route exact path="/" component={Home} />
+				<Route path="/play">
+					<Game token={token} genres={genres} />
+				</Route>
+			</Switch>
 		</div>
 	);
 };
