@@ -31,7 +31,9 @@ const Game = ({ token, genres }) => {
 				</Stats>
 				<a>Start over</a>
 			</TopBar>
-			<Songs>[SongList]</Songs>
+			<Songs>
+				<SongList songs={songs} />
+			</Songs>
 			<Artists>
 				<div>[ArtistList]</div>
 				<Button>Choose</Button>
