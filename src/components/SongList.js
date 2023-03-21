@@ -1,12 +1,12 @@
 import React from "react";
-import Card from "./Card";
+import Song from "./Song";
 
 const SongList = ({ songs }) => {
 	return (
 		<div>
-			{/* {songs.map((song, id) => (
-                <Song url={song.url} />
-			))} */}
+			{songs.map((song, index) => (
+				<Song url={song.url} key={index} />
+			))}
 		</div>
 	);
 };
