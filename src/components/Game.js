@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Card from "./Card";
+import SongList from "./SongList";
+import fetchFromSpotify from "../services/api";
 
-const AUTH_ENDPOINT =
-	"https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
-const TOKEN_KEY = "whos-who-access-token";
-
-const Game = ({ token, genres }) => {
+const Game = ({ token }) => {
 	// Game state constants
 	const DEFAULT = "DEFAULT";
 	const CORRECT = "CORRECT_ANSWER";
