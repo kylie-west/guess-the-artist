@@ -3,6 +3,8 @@ import styled from "styled-components";
 import SongList from "./SongList";
 import fetchFromSpotify from "../services/api";
 import Song from "./Song";
+import Heart from "./Heart";
+import Lives from "./Lives";
 
 const testSongUrl =
 	"https://p.scdn.co/mp3-preview/5d4ca824dabf031ca06a259fae5468f1433a8220?cid=74f434552d40467782bc1bc64b12b2e9";
@@ -81,7 +83,9 @@ const Game = ({ token }) => {
 		<Wrapper>
 			<TopBar>
 				<Stats>
-					<div>Lives: {lives}</div>
+					<div>
+						Lives: <Lives lives={lives} />
+					</div>
 					<div>Score: {score}</div>
 				</Stats>
 				<a>Start over</a>
