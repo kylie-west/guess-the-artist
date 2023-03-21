@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SongList from "./SongList";
 import fetchFromSpotify from "../services/api";
@@ -19,6 +19,37 @@ const Game = ({ token }) => {
 	const [selectedArtist, setSelectedArtist] = useState(null);
 	const [gameState, setGameState] = useState(DEFAULT);
 
+	const getArtists = async genre => {
+		// Can't get random artists from API, but we can get song recommendations and pull artist IDs from there
+		const recommendationData = await fetchFromSpotify({
+			token,
+			endpoint: "recommendations",
+			params: { seed_genres: genre, min_popularity: 50, limit: 4 } // TODO: set limit to numArtists
+		});
+		const artistIds = recommendationData.tracks.map(
+			track => track.artists[0].id
+		);
+
+		// Fetch data for each artist (since data from recommendations doesn't include artist images)
+		const artistData = await fetchFromSpotify({
+			token,
+			endpoint: "artists",
+			params: { ids: artistIds.join() }
+		});
+
+		// Create artist objects with data we need
+		const result = artistData.artists.map(artist => ({
+			id: artist.id,
+			name: artist.name,
+			image: artist.images[0].url
+		}));
+
+		console.log(result);
+
+		setArtists(result);
+		return result;
+	};
+
 	return (
 		<Wrapper>
 			<TopBar>
@@ -33,7 +64,13 @@ const Game = ({ token }) => {
 			</Songs>
 			<Artists>
 				<div>[ArtistList]</div>
-				<Button>Choose</Button>
+				<Button
+					onClick={e => {
+						e.preventDefault();
+						getArtists("electronic");
+					}}>
+					Choose
+				</Button>
 			</Artists>
 		</Wrapper>
 	);
