@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SongList from "./SongList";
 import fetchFromSpotify from "../services/api";
+import Song from "./Song";
+
+const testSongUrl =
+	"https://p.scdn.co/mp3-preview/5d4ca824dabf031ca06a259fae5468f1433a8220?cid=74f434552d40467782bc1bc64b12b2e9";
 
 const Game = ({ token }) => {
 	// Game state constants
@@ -40,6 +44,7 @@ const Game = ({ token }) => {
 			endpoint: "recommendations",
 			params: { seed_genres: genre, min_popularity: 50, limit: 4 } // TODO: set limit to numArtists
 		});
+		console.log(recommendationData);
 		const artistIds = recommendationData.tracks.map(
 			track => track.artists[0].id
 		);
@@ -83,6 +88,7 @@ const Game = ({ token }) => {
 			</TopBar>
 			<Songs>
 				<SongList songs={songs} />
+				{/* <Song url={testSongUrl} /> */}
 			</Songs>
 			<Artists>
 				<div>[ArtistList]</div>
