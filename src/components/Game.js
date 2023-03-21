@@ -13,12 +13,26 @@ const Game = ({ token }) => {
 
 	// State
 	const [artists, setArtists] = useState([]);
+	const [correctArtist, setCorrectArtist] = useState(null);
 	const [songs, setSongs] = useState([]);
 	const [score, setScore] = useState(0);
 	const [lives, setLives] = useState(3);
 	const [selectedArtist, setSelectedArtist] = useState(null);
 	const [gameState, setGameState] = useState(DEFAULT);
 
+	/**
+	 *
+	 * @param {array} arr
+	 * @returns A random item from the array
+	 */
+	const getRandom = arr => arr[Math.floor(Math.random() * arr.length)];
+
+	/**
+	 * Gets artists from the Spotify API and returns artist objects
+	 *
+	 * @param {string} genre    Genre of artists to get
+	 * @returns An array of artist objects
+	 */
 	const getArtists = async genre => {
 		// Can't get random artists from API, but we can get song recommendations and pull artist IDs from there
 		const recommendationData = await fetchFromSpotify({
@@ -45,10 +59,18 @@ const Game = ({ token }) => {
 		}));
 
 		console.log(result);
-
-		setArtists(result);
 		return result;
 	};
+
+	// Gets and sets artists on component render
+	useEffect(() => {
+		const setUpArtists = async () => {
+			const artistsArray = await getArtists("electronic"); // test genre
+			setArtists(artistsArray);
+			setCorrectArtist(getRandom(artistsArray));
+		};
+		setUpArtists();
+	}, []);
 
 	return (
 		<Wrapper>
@@ -64,13 +86,7 @@ const Game = ({ token }) => {
 			</Songs>
 			<Artists>
 				<div>[ArtistList]</div>
-				<Button
-					onClick={e => {
-						e.preventDefault();
-						getArtists("electronic");
-					}}>
-					Choose
-				</Button>
+				<Button>Choose</Button>
 			</Artists>
 		</Wrapper>
 	);
