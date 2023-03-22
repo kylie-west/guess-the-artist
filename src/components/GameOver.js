@@ -8,7 +8,9 @@ export const GameOver = (props) => {
 
 const PlayAgain = () =>{
 
-    return (Redirect("/play")
+    return (
+
+        props.setGameState('DEFAULT')
 
     
     )
@@ -25,10 +27,6 @@ return(
     <Card padding= "25px">Score:{props.score}</Card>
 
     <button onClick = {PlayAgain}>Play Again</button>
-
-
-
-
 
     </Wrapper>
 

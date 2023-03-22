@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
+import { Route, Redirect, Link, Routes } from "react-router-dom";
 import styled from "styled-components";
 import SongList from "./SongList";
 import fetchFromSpotify from "../services/api";
 import Song from "./Song";
 import Lives from "./Lives";
 import Artist from "./Artist";
+import GameOver from "./GameOver"
 import ArtistList from "./ArtistList"
+import Card from "./Card";
 const testSongUrl =
 	"https://p.scdn.co/mp3-preview/5d4ca824dabf031ca06a259fae5468f1433a8220?cid=74f434552d40467782bc1bc64b12b2e9";
 
@@ -137,30 +140,39 @@ const Game = ({ token, config }) => {
 	useEffect(() => {
 		setUpData();
 	}, []);
+	if(gameState == GAME_OVER){
+		return (
+			<GameOver score = {score} setGameState = {setGameState}/>
 
-	return (
-		<Wrapper>
-			<TopBar>
-				<Stats>
-					<div>
-						Lives: <Lives lives={lives} />
-					</div>
-					<div>Score: {score}</div>
-				</Stats>
-				<a>Start over</a>
-			</TopBar>
-			<Songs>
-				<SongList songs={songs} />
-				{/* <Song url={testSongUrl} /> */}
-			</Songs>
-			<Artists>
+		)
+	}
+	else {
+		return (
+			<Wrapper>
+				<TopBar>
+					<Stats>
+						<div>
+							Lives: <Lives lives={lives} />
+						</div>
+						<div>Score: {score}</div>
+					</Stats>
+					<a>Start over</a>
+				</TopBar>
+				<Songs>
+					<SongList songs={songs} />
+					{/* <Song url={testSongUrl} /> */}
+				</Songs>
+				<Artists>
+	
+				<ArtistList artists={artists}></ArtistList>
+					<div></div>
+					<Button>Choose</Button>
+				</Artists>
+			</Wrapper>
+		);
 
-			<ArtistList artists={artists}></ArtistList>
-				<div></div>
-				<Button onClick={handleClick}>Choose</Button>
-			</Artists>
-		</Wrapper>
-	);
+	}
+	
 };
 
 export default Game;
