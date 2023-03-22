@@ -6,14 +6,6 @@ import Card from "./Card";
 import Game from "./Game";
 import Artist from "./Artist"
 
-const SubmitToGame = () =>{
-
-    return (Redirect("/play")
-
-    
-    )
-}
-
 
 export const Landing = (props) =>{
     const [selectedGenre, setSelectedGenre] = useState("");
@@ -98,7 +90,7 @@ return (
         )}
     </ArtistSetting>
 
-        <button onClick = {SubmitToGame}>Confirm</button>
+    <Link to ="/play"> Submit </Link>
         
 
         

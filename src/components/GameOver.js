@@ -1,20 +1,12 @@
-import { Route, Redirect, Link, Routes } from "react-router-dom";
+import { Route, Redirect, Link, Routes} from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import Card from "./Card";
 
 
+
 export const GameOver = (props) => {
 
-const PlayAgain = () =>{
-
-    return (
-
-        props.setGameState('DEFAULT')
-
-    
-    )
-}
 
 
 return(
@@ -26,7 +18,7 @@ return(
 
     <Card padding= "25px">Score:{props.score}</Card>
 
-    <button onClick = {PlayAgain}>Play Again</button>
+    <Link to =""> Play Again </Link>
 
     </Wrapper>
 
