@@ -19,7 +19,13 @@ const Song = ({ url }) => {
 
 	return (
 		<Card width="150px" height="150px">
-			<audio src={url} playing={isPlaying} ref={audioRef} />
+			<audio
+				src={url}
+				playing={isPlaying.toString()}
+				onPlaying={() => setIsPlaying(true)}
+				onPause={() => setIsPlaying(false)}
+				ref={audioRef}
+			/>
 			<PlayButton onClick={handleClick}>
 				{isPlaying ? (
 					<Icon className="fa-solid fa-pause"></Icon>

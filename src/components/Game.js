@@ -3,13 +3,12 @@ import styled from "styled-components";
 import SongList from "./SongList";
 import fetchFromSpotify from "../services/api";
 import Song from "./Song";
-import Heart from "./Heart";
 import Lives from "./Lives";
 
 const testSongUrl =
 	"https://p.scdn.co/mp3-preview/5d4ca824dabf031ca06a259fae5468f1433a8220?cid=74f434552d40467782bc1bc64b12b2e9";
 
-const Game = ({ token }) => {
+const Game = ({ token, config }) => {
 	// Game state constants
 	const DEFAULT = "DEFAULT";
 	const CORRECT = "CORRECT_ANSWER";
@@ -26,6 +25,9 @@ const Game = ({ token }) => {
 	const [selectedArtist, setSelectedArtist] = useState(null);
 	const [gameState, setGameState] = useState(DEFAULT);
 
+	// Prop destructuring
+	const { selectedGenre, numSongs, numArtists } = config;
+
 	/**
 	 *
 	 * @param {array} arr
@@ -39,12 +41,12 @@ const Game = ({ token }) => {
 	 * @param {string} genre    Genre of artists to get
 	 * @returns An array of artist objects
 	 */
-	const getArtists = async genre => {
+	const getArtists = async (token, genre, limit) => {
 		// Can't get random artists from API, but we can get song recommendations and pull artist IDs from there
 		const recommendationData = await fetchFromSpotify({
 			token,
 			endpoint: "recommendations",
-			params: { seed_genres: genre, min_popularity: 50, limit: 4 } // TODO: set limit to numArtists
+			params: { seed_genres: genre, limit: 4, min_popularity: 50 }
 		});
 		console.log(recommendationData);
 		const artistIds = recommendationData.tracks.map(
@@ -69,14 +71,32 @@ const Game = ({ token }) => {
 		return result;
 	};
 
-	// Gets and sets artists on component render
+	const getSongs = async (token, artist) => {
+		console.log("Artist:", artist);
+		const id = artist.id;
+		const data = await fetchFromSpotify({
+			token,
+			endpoint: `artists/${id}/top-tracks`,
+			params: { id, market: "US" }
+		});
+
+		console.log(data.tracks);
+		return data.tracks;
+	};
+
+	const setUpData = async () => {
+		const artistsArray = await getArtists(token, selectedGenre, numArtists);
+		setArtists(artistsArray);
+		let randomArtist = getRandom(artistsArray);
+		setCorrectArtist(randomArtist);
+
+		const songs = await getSongs(token, randomArtist);
+		setSongs(songs);
+	};
+
+	// Gets and sets data on component render
 	useEffect(() => {
-		const setUpArtists = async () => {
-			const artistsArray = await getArtists("electronic"); // test genre
-			setArtists(artistsArray);
-			setCorrectArtist(getRandom(artistsArray));
-		};
-		setUpArtists();
+		setUpData(selectedGenre);
 	}, []);
 
 	return (
@@ -95,7 +115,7 @@ const Game = ({ token }) => {
 				{/* <Song url={testSongUrl} /> */}
 			</Songs>
 			<Artists>
-				<div>[ArtistList]</div>
+				<div></div>
 				<Button>Choose</Button>
 			</Artists>
 		</Wrapper>
