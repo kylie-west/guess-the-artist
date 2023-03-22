@@ -5,7 +5,7 @@ import fetchFromSpotify from "../services/api";
 import Song from "./Song";
 import Lives from "./Lives";
 import Artist from "./Artist";
-import ArtistList from "./ArtistList"
+import ArtistList from "./ArtistList";
 const testSongUrl =
 	"https://p.scdn.co/mp3-preview/5d4ca824dabf031ca06a259fae5468f1433a8220?cid=74f434552d40467782bc1bc64b12b2e9";
 
@@ -24,7 +24,6 @@ const Game = ({ token, config }) => {
 	const [score, setScore] = useState(0);
 	const [lives, setLives] = useState(3);
 	const [selectedArtist, setSelectedArtist] = useState(null);
-	const [artistHistory, setArtistHistory] = useState([]);
 	const [gameState, setGameState] = useState(DEFAULT);
 
 	// Prop destructuring
@@ -87,10 +86,6 @@ const Game = ({ token, config }) => {
 	};
 
 	const setUpData = async () => {
-		if (correctArtist) {
-			setArtistHistory([...artistHistory, correctArtist]);
-		}
-
 		const artistsArray = await getArtists(token, selectedGenre, numArtists);
 		setArtists(artistsArray);
 		let randomArtist = getRandom(artistsArray);
@@ -100,51 +95,18 @@ const Game = ({ token, config }) => {
 		setSongs(songs);
 	};
 
-	const handleClick = e => {
-		// if (!selectedArtist) {
-		// 	return;
-		// }
-
-		if (lives < 1) {
-			setGameState(GAME_OVER);
-			return;
-		}
-
-		switch (gameState) {
-			case DEFAULT:
-				if (selectedArtist === correctArtist) {
-					setGameState(CORRECT);
-					break;
-				} else {
-					setGameState(INCORRECT);
-					break;
-				}
-			case CORRECT:
-				setGameState(DEFAULT);
-				setUpData();
-				break;
-			case INCORRECT:
-				setGameState(REVEALED);
-				break;
-			case REVEALED:
-				setGameState(DEFAULT);
-				setUpData();
-				break;
-		}
-	};
-
 	// Gets and sets data on component render
 	useEffect(() => {
-		setUpData();
+		setUpData(selectedGenre);
 	}, []);
 
 	return (
 		<Wrapper>
 			<TopBar>
 				<Stats>
-					<div>
+					<LivesContainer>
 						Lives: <Lives lives={lives} />
-					</div>
+					</LivesContainer>
 					<div>Score: {score}</div>
 				</Stats>
 				<a>Start over</a>
@@ -154,11 +116,9 @@ const Game = ({ token, config }) => {
 				{/* <Song url={testSongUrl} /> */}
 			</Songs>
 			<Artists>
-
-			<ArtistList artists={artists}></ArtistList>
-				<div></div>
-				<Button onClick={handleClick}>Choose</Button>
+				<ArtistList artists={artists}></ArtistList>
 			</Artists>
+			<Button>Choose</Button>
 		</Wrapper>
 	);
 };
@@ -180,13 +140,28 @@ const TopBar = styled.div`
 
 const Stats = styled.div`
 	display: flex;
+	align-items: center;
 	gap: 10px;
 `;
 
-const Songs = styled.div``;
+const LivesContainer = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 5px;
+`;
 
-const Artists = styled.div``;
+const Songs = styled.div`
+	display: flex;
+	gap: 10px;
+`;
+
+const Artists = styled.div`
+	display: flex;
+	gap: 20px;
+`;
 
 const Button = styled.button`
 	width: fit-content;
+	padding: 10px;
+	cursor: pointer;
 `;
