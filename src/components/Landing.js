@@ -4,6 +4,7 @@ import styled from "styled-components";
 import App from "./App";
 import Card from "./Card";
 import Game from "./Game";
+import Artist from "./Artist"
 
 const SubmitToGame = () =>{
 
@@ -41,6 +42,7 @@ return (
     <Wrapper>  
         <h1>Who's Who</h1>
         <h2>A musical guessing game</h2>
+
 
         <h3>Pick a genre</h3>
             

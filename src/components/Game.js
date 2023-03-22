@@ -4,7 +4,8 @@ import SongList from "./SongList";
 import fetchFromSpotify from "../services/api";
 import Song from "./Song";
 import Lives from "./Lives";
-
+import Artist from "./Artist";
+import ArtistList from "./ArtistList"
 const testSongUrl =
 	"https://p.scdn.co/mp3-preview/5d4ca824dabf031ca06a259fae5468f1433a8220?cid=74f434552d40467782bc1bc64b12b2e9";
 
@@ -115,6 +116,8 @@ const Game = ({ token, config }) => {
 				{/* <Song url={testSongUrl} /> */}
 			</Songs>
 			<Artists>
+
+			<ArtistList artists={artists}></ArtistList>
 				<div></div>
 				<Button>Choose</Button>
 			</Artists>
