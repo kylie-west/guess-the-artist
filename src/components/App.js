@@ -9,6 +9,7 @@ const TOKEN_KEY = "whos-who-access-token";
 
 import Home from "./Home";
 import Landing from "./Landing";
+import GameOver from "./GameOver";
 
 const App = () => {
 	const [token, setToken] = useState(null);
@@ -72,6 +73,9 @@ const App = () => {
 				</Route>
 				<Route path="/play">
 					<Game token={token} config={config} />
+				</Route>
+				<Route path="/gameover">
+					<GameOver token={token} config={config} />
 				</Route>
 			</Switch>
 		</div>
