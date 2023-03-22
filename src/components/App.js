@@ -63,12 +63,13 @@ const App = () => {
 	if (authLoading || configLoading) {
 	  return <div>Loading...</div>
 	}
+	
 
 	return (
 		<div>
 			<Switch>
 				<Route exact path="/">
-    <				Landing genres={genres}  />
+    <				Landing genres={genres} config={config} setConfig={setConfig} />
 				</Route>
 				<Route path="/play">
 					<Game token={token} genres={genres} />

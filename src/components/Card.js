@@ -12,6 +12,9 @@ const Card = styled.div`
 	background: ${({ bg }) => bg || "white"};
 	border: 1px solid gray;
 	border-radius: 4px;
+	${({ selected }) => selected && `
+    background: silver;
+  `}
 `;
 
 export default Card;
