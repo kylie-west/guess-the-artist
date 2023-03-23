@@ -4,6 +4,7 @@ import SongList from "./SongList";
 import Lives from "./Lives";
 import GameOver from "./GameOver";
 import ArtistList from "./ArtistList";
+import { Suspense } from 'react';
 import {
 	getArtists,
 	getSongs,
@@ -30,14 +31,22 @@ const Game = ({ token, config }) => {
 	const [selectedArtist, setSelectedArtist] = useState(null);
 	const [artistHistory, setArtistHistory] = useState([]);
 	const [gameState, setGameState] = useState(DEFAULT);
-
+	const [loading, setLoading] = useState(false);
 	// Prop destructuring
 	const { selectedGenre, numSongs, numArtists } = config;
 
 	// Gets and sets data on component render
 	useEffect(() => {
+		setLoading(true);
+		setTimeout(() => {
+		  setLoading(false);
+		}, 2000);
+	  }, []);
+
+	useEffect(() => {
 		setUpData(selectedGenre);
 	}, []);
+
 
 	const setUpData = async () => {
 		if (correctArtist) {
@@ -107,7 +116,9 @@ const Game = ({ token, config }) => {
 		return <GameOver score={score} setGameState={setGameState} />;
 	} else {
 		return (
+		
 			<Wrapper>
+				
 				<TopBar>
 					<Stats>
 						<LivesContainer>
@@ -117,15 +128,22 @@ const Game = ({ token, config }) => {
 					</Stats>
 					<a>Start over</a>
 				</TopBar>
+				<div>  
+				{loading ? <div>🌀 Loading...</div>:  
+				<Wrapper2> 
 				<Songs>
 					<SongList songs={songs} />
 				</Songs>
+				
 				<Artists>
 					<ArtistList
 						artists={currentArtists}
 						setSelectedArtist={setSelectedArtist}
 						selectedArtist={selectedArtist}></ArtistList>
 				</Artists>
+				</Wrapper2>
+	}
+	</div>
 				<Button onClick={handleClick}>
 					{gameState === INCORRECT
 						? "Reveal Answer"
@@ -133,7 +151,12 @@ const Game = ({ token, config }) => {
 						? "Next"
 						: "Choose"}
 				</Button>
+						
+				
+				
 			</Wrapper>
+		
+			
 		);
 	}
 };
@@ -141,6 +164,13 @@ const Game = ({ token, config }) => {
 export default Game;
 
 const Wrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 50px;
+`;
+
+const Wrapper2 = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -168,11 +198,17 @@ const LivesContainer = styled.div`
 const Songs = styled.div`
 	display: flex;
 	gap: 10px;
+	flex-direction: row;
+	align-items: center;
 `;
 
 const Artists = styled.div`
 	display: flex;
 	gap: 20px;
+	flex-direction: row;
+	align-items: center;
+	
+	
 `;
 
 const Button = styled.button`
@@ -180,3 +216,11 @@ const Button = styled.button`
 	padding: 10px;
 	cursor: pointer;
 `;
+
+
+const Loader = styled.div`
+	display: flex;
+	padding: 10px;
+`;
+
+

@@ -42,7 +42,6 @@ var genreList = {
       "hardstyle",
       "heavy-metal",
       "hip-hop",
-      "holidays",
       "honky-tonk",
       "house",
       "indian",
