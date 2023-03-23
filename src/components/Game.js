@@ -35,7 +35,7 @@ const Game = ({ token, config }) => {
 
 	// Gets and sets data on component render
 	useEffect(() => {
-		setUpData(selectedGenre);
+		setUpData();
 	}, []);
 
 	const setUpData = async () => {
