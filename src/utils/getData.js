@@ -89,9 +89,27 @@ export const getSongs = async (token, artist, genre, limit) => {
 			track.album.album_type !== "compilation" &&
 			track.explicit === false
 	);
+
+	const checkArtistMatch = (track, correctArtistId) => {
+		const trackArtists = track.artists;
+		for (let i = 0; i < trackArtists.length; i++) {
+			if (trackArtists[i].id === correctArtistId) {
+				return true;
+			}
+		}
+		return false;
+	};
+
+	// Make sure artists list on track contains artist with ID matching correct artist
+	const refilteredTracks = filteredTracks.filter(track =>
+		checkArtistMatch(track, artist.id)
+	);
+
 	console.log("Filtered tracks:", filteredTracks);
+	console.log("Refiltered tracks:", refilteredTracks);
+
 	// Map tracks to simpler objects
-	const mappedTracks = filteredTracks.map(({ id, name, preview_url }) => ({
+	const mappedTracks = refilteredTracks.map(({ id, name, preview_url }) => ({
 		id,
 		name,
 		artist,
