@@ -4,14 +4,12 @@ import SongList from "./SongList";
 import Lives from "./Lives";
 import GameOver from "./GameOver";
 import ArtistList from "./ArtistList";
-import { Suspense } from 'react';
 import {
 	getArtists,
 	getSongs,
 	getRandom,
 	getMultipleRandom
 } from "../utils/getData";
-
 
 const Game = ({ token, config }) => {
 	// Game state constants
@@ -32,6 +30,7 @@ const Game = ({ token, config }) => {
 	const [artistHistory, setArtistHistory] = useState([]);
 	const [gameState, setGameState] = useState(DEFAULT);
 	const [loading, setLoading] = useState(false);
+
 	// Prop destructuring
 	const { selectedGenre, numSongs, numArtists } = config;
 
@@ -39,14 +38,13 @@ const Game = ({ token, config }) => {
 	useEffect(() => {
 		setLoading(true);
 		setTimeout(() => {
-		  setLoading(false);
+			setLoading(false);
 		}, 2000);
-	  }, []);
+	}, []);
 
 	useEffect(() => {
 		setUpData(selectedGenre);
 	}, []);
-
 
 	const setUpData = async () => {
 		if (correctArtist) {
@@ -116,9 +114,7 @@ const Game = ({ token, config }) => {
 		return <GameOver score={score} setGameState={setGameState} />;
 	} else {
 		return (
-		
 			<Wrapper>
-				
 				<TopBar>
 					<Stats>
 						<LivesContainer>
@@ -128,22 +124,24 @@ const Game = ({ token, config }) => {
 					</Stats>
 					<a>Start over</a>
 				</TopBar>
-				<div>  
-				{loading ? <div>🌀 Loading...</div>:  
-				<Wrapper2> 
-				<Songs>
-					<SongList songs={songs} />
-				</Songs>
-				
-				<Artists>
-					<ArtistList
-						artists={currentArtists}
-						setSelectedArtist={setSelectedArtist}
-						selectedArtist={selectedArtist}></ArtistList>
-				</Artists>
-				</Wrapper2>
-	}
-	</div>
+				<div>
+					{loading ? (
+						<div>🌀 Loading...</div>
+					) : (
+						<Wrapper2>
+							<Songs>
+								<SongList songs={songs} />
+							</Songs>
+
+							<Artists>
+								<ArtistList
+									artists={currentArtists}
+									setSelectedArtist={setSelectedArtist}
+									selectedArtist={selectedArtist}></ArtistList>
+							</Artists>
+						</Wrapper2>
+					)}
+				</div>
 				<Button onClick={handleClick}>
 					{gameState === INCORRECT
 						? "Reveal Answer"
@@ -151,12 +149,7 @@ const Game = ({ token, config }) => {
 						? "Next"
 						: "Choose"}
 				</Button>
-						
-				
-				
 			</Wrapper>
-		
-			
 		);
 	}
 };
@@ -207,8 +200,6 @@ const Artists = styled.div`
 	gap: 20px;
 	flex-direction: row;
 	align-items: center;
-	
-	
 `;
 
 const Button = styled.button`
@@ -217,10 +208,7 @@ const Button = styled.button`
 	cursor: pointer;
 `;
 
-
 const Loader = styled.div`
 	display: flex;
 	padding: 10px;
 `;
-
-

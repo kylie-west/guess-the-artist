@@ -35,7 +35,7 @@ export const getMultipleRandom = (arr, numItems) => {
  * @param {string} genre    Genre of artists to get
  * @returns An array of artist objects
  */
-export const getArtists = async (token, genre, limit) => {
+export const getArtists = async (token, genre) => {
 	const data = await fetchFromSpotify({
 		token,
 		endpoint: "search",
@@ -84,10 +84,7 @@ export const getSongs = async (token, artist, genre, limit) => {
 	console.log("Raw track data:", rawTracks);
 	// Filter tracks - excludes tracks without previews and tracks from compilation albums
 	const filteredTracks = rawTracks.filter(
-		track =>
-			track.preview_url &&
-			track.album.album_type !== "compilation" &&
-			track.explicit === false
+		track => track.preview_url && track.album.album_type !== "compilation"
 	);
 
 	const checkArtistMatch = (track, correctArtistId) => {
