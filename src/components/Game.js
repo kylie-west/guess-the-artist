@@ -22,6 +22,7 @@ const Game = ({ token, config }) => {
 
 	// State
 	const [artists, setArtists] = useState([]);
+	const [currentArtists, setCurrentArtists] = useState([]);
 	const [correctArtist, setCorrectArtist] = useState(null);
 	const [songs, setSongs] = useState([]);
 	const [score, setScore] = useState(0);
@@ -63,46 +64,39 @@ const Game = ({ token, config }) => {
 	 * @returns An array of artist objects
 	 */
 	const getArtists = async (token, genre, limit) => {
-		// Can't get random artists from API, but we can get song recommendations and pull artist IDs from there
-		const recommendationData = await fetchFromSpotify({
+		const data = await fetchFromSpotify({
 			token,
-			endpoint: "recommendations",
-			params: { seed_genres: genre, limit, min_popularity: 50 }
+			endpoint: "search",
+			params: {
+				q: `genre:${genre}`,
+				limit: 50,
+				type: "artist",
+				market: "US"
+			}
 		});
-		console.log(recommendationData);
-		const artistIds = recommendationData.tracks.map(
-			track => track.artists[0].id
+		console.log("Artist data:", data.artists.items);
+
+		let filteredArtists = data.artists.items.filter(
+			artist => artist.popularity > 60
 		);
+		if (filteredArtists < 20) {
+			filteredArtists = data.artists.items.filter(
+				artist => artist.popularity > 0
+			);
+		}
 
-		// Fetch data for each artist (since data from recommendations doesn't include artist images)
-		const artistData = await fetchFromSpotify({
-			token,
-			endpoint: "artists",
-			params: { ids: artistIds.join() }
-		});
-
-		// Create artist objects with data we need
-		const result = artistData.artists.map(artist => ({
+		const result = filteredArtists.map(artist => ({
 			id: artist.id,
 			name: artist.name,
-			image: artist.images[0].url
+			image: artist.images[0].url || ""
 		}));
 
-		console.log(result);
+		console.log("Filtered artists:", result);
 		return result;
 	};
 
 	const getSongs = async (token, artist, genre) => {
 		console.log("Artist:", artist);
-		// const id = artist.id;
-		// const data = await fetchFromSpotify({
-		// 	token,
-		// 	endpoint: `artists/${id}/top-tracks`,
-		// 	params: { id, market: "US" }
-		// });
-
-		// console.log(data.tracks);
-		// return data.tracks;
 		const data = await fetchFromSpotify({
 			token,
 			endpoint: "search",
@@ -115,12 +109,15 @@ const Game = ({ token, config }) => {
 		});
 
 		const rawTracks = data.tracks.items;
-		console.log(rawTracks);
+		console.log("Raw track data:", rawTracks);
 		// Filter tracks - excludes tracks without previews and tracks from compilation albums
 		const filteredTracks = rawTracks.filter(
-			track => track.preview_url && track.album.album_type !== "compilation"
+			track =>
+				track.preview_url &&
+				track.album.album_type !== "compilation" &&
+				track.explicit === false
 		);
-		console.log("Filtered:", filteredTracks);
+		console.log("Filtered tracks:", filteredTracks);
 		// Map tracks to simpler objects
 		const mappedTracks = filteredTracks.map(({ id, name, preview_url }) => ({
 			id,
@@ -139,9 +136,21 @@ const Game = ({ token, config }) => {
 			setArtistHistory([...artistHistory, correctArtist]);
 		}
 
-		const artistsArray = await getArtists(token, selectedGenre, numArtists);
-		setArtists(artistsArray);
-		let randomArtist = getRandom(artistsArray);
+		// If artists have already been fetched for this session, don't re-fetch
+		let artistsArray;
+		if (!artists.length) {
+			artistsArray = await getArtists(token, selectedGenre, numArtists);
+			setArtists(artistsArray);
+		} else {
+			artistsArray = artists;
+		}
+
+		// Set current displayed artists
+		const randomArtists = getMultipleRandom(artistsArray, numArtists);
+		setCurrentArtists(randomArtists);
+
+		// From that random list, choose and set the "correct" artist for this round
+		let randomArtist = getRandom(randomArtists);
 		setCorrectArtist(randomArtist);
 
 		const songs = await getSongs(token, randomArtist, selectedGenre);
@@ -209,7 +218,7 @@ const Game = ({ token, config }) => {
 				</Songs>
 				<Artists>
 					<ArtistList
-						artists={artists}
+						artists={currentArtists}
 						setSelectedArtist={setSelectedArtist}
 						selectedArtist={selectedArtist}></ArtistList>
 				</Artists>

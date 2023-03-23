@@ -6,7 +6,7 @@ import Card from "./Card";
 const Artist = ({ url, artistName, onClick, selected }) => {
 	return (
 		<StyledCard width="250" height="290" onClick={onClick} selected={selected}>
-			<img src={url} alt="new" width="250" height="248" />
+			<img src={url || ""} alt="new" width="250" height="248" />
 
 			{artistName}
 		</StyledCard>

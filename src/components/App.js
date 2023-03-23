@@ -12,7 +12,6 @@ const TOKEN_KEY = "whos-who-access-token";
 const App = () => {
 	const [token, setToken] = useState(null);
 	const [genres, setGenres] = useState([]);
-	const [selectedGenre, setSelectedGenre] = useState("");
 	const [authLoading, setAuthLoading] = useState(false);
 	const [configLoading, setConfigLoading] = useState(false);
 	const [config, setConfig] = useState({
