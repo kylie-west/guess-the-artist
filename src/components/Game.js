@@ -39,6 +39,22 @@ const Game = ({ token, config }) => {
 	 */
 	const getRandom = arr => arr[Math.floor(Math.random() * arr.length)];
 
+	const getMultipleRandom = (arr, numItems) => {
+		// Copy array so we can mutate it
+		const array = [...arr];
+		const result = [];
+
+		for (let i = 0; i < numItems; i++) {
+			const randomIndex = Math.floor(Math.random() * array.length);
+			// Add random item to result array
+			result.push(array[randomIndex]);
+			// Remove selected item from array to avoid choosing duplicate items
+			array.splice(randomIndex, 1);
+		}
+
+		return result;
+	};
+
 	/**
 	 * Gets artists from the Spotify API and returns artist objects
 	 *
@@ -75,17 +91,46 @@ const Game = ({ token, config }) => {
 		return result;
 	};
 
-	const getSongs = async (token, artist) => {
+	const getSongs = async (token, artist, genre) => {
 		console.log("Artist:", artist);
-		const id = artist.id;
+		// const id = artist.id;
+		// const data = await fetchFromSpotify({
+		// 	token,
+		// 	endpoint: `artists/${id}/top-tracks`,
+		// 	params: { id, market: "US" }
+		// });
+
+		// console.log(data.tracks);
+		// return data.tracks;
 		const data = await fetchFromSpotify({
 			token,
-			endpoint: `artists/${id}/top-tracks`,
-			params: { id, market: "US" }
+			endpoint: "search",
+			params: {
+				q: `artist:${artist.name}&20genre:${genre}`,
+				limit: 40,
+				type: "track",
+				market: "US"
+			}
 		});
 
-		console.log(data.tracks);
-		return data.tracks;
+		const rawTracks = data.tracks.items;
+		console.log(rawTracks);
+		// Filter tracks - excludes tracks without previews and tracks from compilation albums
+		const filteredTracks = rawTracks.filter(
+			track => track.preview_url && track.album.album_type !== "compilation"
+		);
+		console.log("Filtered:", filteredTracks);
+		// Map tracks to simpler objects
+		const mappedTracks = filteredTracks.map(({ id, name, preview_url }) => ({
+			id,
+			name,
+			artist,
+			preview_url
+		}));
+		// Get numSongs # of random tracks
+		const tracks = getMultipleRandom(mappedTracks, numSongs);
+		console.log(tracks);
+		return tracks;
 	};
 
 	const setUpData = async () => {
@@ -94,7 +139,7 @@ const Game = ({ token, config }) => {
 		let randomArtist = getRandom(artistsArray);
 		setCorrectArtist(randomArtist);
 
-		const songs = await getSongs(token, randomArtist);
+		const songs = await getSongs(token, randomArtist, selectedGenre);
 		setSongs(songs);
 	};
 

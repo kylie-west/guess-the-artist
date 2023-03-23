@@ -4,9 +4,10 @@ import Song from "./Song";
 const SongList = ({ songs }) => {
 	return (
 		<>
-			{songs.map((song, index) => (
-				<Song url={song.preview_url} key={index} />
-			))}
+			{songs.map(
+				(song, index) =>
+					song.preview_url && <Song url={song.preview_url} key={index} />
+			)}
 		</>
 	);
 };
