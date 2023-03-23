@@ -1,10 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Card from "./Card";
 
-const Song = ({ url }) => {
+const Song = ({ url, handlePlay, currentPlayer }) => {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const audioRef = useRef();
+
+	useEffect(() => {
+		if (!currentPlayer) {
+			audioRef.current.pause();
+			setIsPlaying(false);
+		}
+	}, [currentPlayer]);
 
 	const handleClick = e => {
 		e.preventDefault();
@@ -26,7 +33,11 @@ const Song = ({ url }) => {
 				onPause={() => setIsPlaying(false)}
 				ref={audioRef}
 			/>
-			<PlayButton onClick={handleClick}>
+			<PlayButton
+				onClick={e => {
+					handleClick(e);
+					handlePlay(audioRef.current);
+				}}>
 				{isPlaying ? (
 					<Icon className="fa-solid fa-pause"></Icon>
 				) : (
