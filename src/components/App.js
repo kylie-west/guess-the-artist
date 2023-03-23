@@ -4,6 +4,7 @@ import fetchFromSpotify, { request } from "../services/api";
 import Game from "./Game";
 import Landing from "./Landing";
 import GameOver from "./GameOver";
+import genreList from "./genreList";
 
 const AUTH_ENDPOINT =
 	"https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
@@ -30,12 +31,13 @@ const App = () => {
 
 	const loadGenres = async t => {
 		setConfigLoading(true);
-		const response = await fetchFromSpotify({
-			token: t,
-			endpoint: "recommendations/available-genre-seeds"
-		});
-		console.log(response);
-		setGenres(response.genres);
+		// const response = await fetchFromSpotify({
+		// 	token: t,
+		// 	endpoint: "recommendations/available-genre-seeds"
+		// });
+		// console.log(response);
+	
+		setGenres(genreList.genres);
 		setConfigLoading(false);
 	};
 

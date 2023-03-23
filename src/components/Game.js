@@ -11,6 +11,7 @@ import {
 	getMultipleRandom
 } from "../utils/getData";
 
+
 const Game = ({ token, config }) => {
 	// Game state constants
 	const DEFAULT = "DEFAULT";
