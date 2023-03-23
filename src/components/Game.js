@@ -175,7 +175,6 @@ const Game = ({ token, config }) => {
 					break;
 				} else {
 					setGameState(INCORRECT);
-					setLives(lives - 1);
 					break;
 				}
 			case CORRECT:
@@ -184,6 +183,7 @@ const Game = ({ token, config }) => {
 				setSelectedArtist(null);
 				break;
 			case INCORRECT:
+				setLives(lives - 1);
 				setGameState(REVEALED);
 				break;
 			case REVEALED:
@@ -222,7 +222,13 @@ const Game = ({ token, config }) => {
 						setSelectedArtist={setSelectedArtist}
 						selectedArtist={selectedArtist}></ArtistList>
 				</Artists>
-				<Button onClick={handleClick}>Choose</Button>
+				<Button onClick={handleClick}>
+					{gameState === INCORRECT
+						? "Reveal Answer"
+						: gameState === CORRECT || gameState === REVEALED
+						? "Next"
+						: "Choose"}
+				</Button>
 			</Wrapper>
 		);
 	}
