@@ -9,6 +9,7 @@ import Artist from "./Artist";
 export const Landing = props => {
 	const numSongsOptions = [1, 2, 3];
 	const numArtistsOptions = [2, 3, 4];
+    
 	// const [selectedGenre, setSelectedGenre] = useState('')
 	// const [selectedSong, setSelectedSong] = useState([
 	//     {title: '1', color:'silver',  id:1},
@@ -25,6 +26,7 @@ export const Landing = props => {
 	//     //props.config.setConfig(e.target.value)
 
 	// }
+    
 
 	return (
 		<Wrapper>
@@ -48,8 +50,10 @@ export const Landing = props => {
 							{genre}
 						</option>
 					))}
+                    
 				</select>
 			</div>
+            
 
 			{/* <h3> Songs per guess</h3>
         <SongSetting>
@@ -84,6 +88,7 @@ export const Landing = props => {
 						key={option}
 						onClick={() =>
 							props.setConfig({ ...props.config, numSongs: option })
+                            
 						}
 						selected={props.config.numSongs === option}>
 						{option}
