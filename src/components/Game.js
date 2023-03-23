@@ -166,7 +166,10 @@ const Game = ({ token, config }) => {
 					{/* <Song url={testSongUrl} /> */}
 				</Songs>
 				<Artists>
-					<ArtistList artists={artists}></ArtistList>
+					<ArtistList
+						artists={artists}
+						setSelectedArtist={setSelectedArtist}
+						selectedArtist={selectedArtist}></ArtistList>
 				</Artists>
 				<Button>Choose</Button>
 			</Wrapper>
