@@ -51,7 +51,7 @@ export const getArtists = async (token, genre, limit) => {
 	let filteredArtists = data.artists.items.filter(
 		artist => artist.popularity > 60
 	);
-	if (filteredArtists < 20) {
+	if (filteredArtists.length < 20) {
 		filteredArtists = data.artists.items.filter(
 			artist => artist.popularity > 0
 		);
