@@ -67,7 +67,7 @@ const Game = ({ token, config }) => {
 		const recommendationData = await fetchFromSpotify({
 			token,
 			endpoint: "recommendations",
-			params: { seed_genres: genre, limit: 4, min_popularity: 50 }
+			params: { seed_genres: genre, limit, min_popularity: 50 }
 		});
 		console.log(recommendationData);
 		const artistIds = recommendationData.tracks.map(
@@ -162,14 +162,17 @@ const Game = ({ token, config }) => {
 			case DEFAULT:
 				if (selectedArtist === correctArtist) {
 					setGameState(CORRECT);
+					setScore(score + 1);
 					break;
 				} else {
 					setGameState(INCORRECT);
+					setLives(lives - 1);
 					break;
 				}
 			case CORRECT:
 				setGameState(DEFAULT);
 				setUpData();
+				setSelectedArtist(null);
 				break;
 			case INCORRECT:
 				setGameState(REVEALED);
@@ -177,6 +180,7 @@ const Game = ({ token, config }) => {
 			case REVEALED:
 				setGameState(DEFAULT);
 				setUpData();
+				setSelectedArtist(null);
 				break;
 		}
 	};
