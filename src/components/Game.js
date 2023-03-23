@@ -27,6 +27,7 @@ const Game = ({ token, config }) => {
 	const [score, setScore] = useState(0);
 	const [lives, setLives] = useState(3);
 	const [selectedArtist, setSelectedArtist] = useState(null);
+	const [artistHistory, setArtistHistory] = useState([]);
 	const [gameState, setGameState] = useState(DEFAULT);
 
 	// Prop destructuring
@@ -134,6 +135,10 @@ const Game = ({ token, config }) => {
 	};
 
 	const setUpData = async () => {
+		if (correctArtist) {
+			setArtistHistory([...artistHistory, correctArtist]);
+		}
+
 		const artistsArray = await getArtists(token, selectedGenre, numArtists);
 		setArtists(artistsArray);
 		let randomArtist = getRandom(artistsArray);
@@ -141,6 +146,39 @@ const Game = ({ token, config }) => {
 
 		const songs = await getSongs(token, randomArtist, selectedGenre);
 		setSongs(songs);
+	};
+
+	const handleClick = e => {
+		if (!selectedArtist) {
+			return;
+		}
+
+		if (lives < 1) {
+			setGameState(GAME_OVER);
+			return;
+		}
+
+		switch (gameState) {
+			case DEFAULT:
+				if (selectedArtist === correctArtist) {
+					setGameState(CORRECT);
+					break;
+				} else {
+					setGameState(INCORRECT);
+					break;
+				}
+			case CORRECT:
+				setGameState(DEFAULT);
+				setUpData();
+				break;
+			case INCORRECT:
+				setGameState(REVEALED);
+				break;
+			case REVEALED:
+				setGameState(DEFAULT);
+				setUpData();
+				break;
+		}
 	};
 
 	// Gets and sets data on component render
@@ -171,7 +209,7 @@ const Game = ({ token, config }) => {
 						setSelectedArtist={setSelectedArtist}
 						selectedArtist={selectedArtist}></ArtistList>
 				</Artists>
-				<Button>Choose</Button>
+				<Button onClick={handleClick}>Choose</Button>
 			</Wrapper>
 		);
 	}
