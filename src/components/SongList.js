@@ -12,6 +12,10 @@ const SongList = ({ songs }) => {
 		setCurrentPlayer(player);
 	};
 
+	useEffect(() => {
+		setCurrentPlayer(null);
+	}, [songs]);
+
 	return (
 		<>
 			{songs.map((song, index) =>
