@@ -34,14 +34,14 @@ const Game = ({ token, config }) => {
 	// Prop destructuring
 	const { selectedGenre, numSongs, numArtists } = config;
 
-	// Gets and sets data on component render
-	useEffect(() => {
-		setLoading(true);
-		setTimeout(() => {
-			setLoading(false);
-		}, 2000);
-	}, []);
+	// useEffect(() => {
+	// 	setLoading(true);
+	// 	setTimeout(() => {
+	// 		setLoading(false);
+	// 	}, 2000);
+	// }, []);
 
+	// Gets and sets data on component render
 	useEffect(() => {
 		setUpData(selectedGenre);
 	}, []);
@@ -54,8 +54,10 @@ const Game = ({ token, config }) => {
 		// If artists have already been fetched for this session, don't re-fetch
 		let artistsArray;
 		if (!artists.length) {
+			setLoading(true);
 			artistsArray = await getArtists(token, selectedGenre, numArtists);
 			setArtists(artistsArray);
+			setLoading(false);
 		} else {
 			artistsArray = artists;
 		}
@@ -69,8 +71,10 @@ const Game = ({ token, config }) => {
 		setCorrectArtist(randomArtist);
 
 		// Fetch a selection of songs belonging to the correct artist
+		setLoading(true);
 		const songs = await getSongs(token, randomArtist, selectedGenre, numSongs);
 		setSongs(songs);
+		setLoading(false);
 	};
 
 	const handleClick = e => {

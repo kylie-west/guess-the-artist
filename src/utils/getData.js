@@ -105,6 +105,13 @@ export const getSongs = async (token, artist, genre, limit) => {
 	console.log("Filtered tracks:", filteredTracks);
 	console.log("Refiltered tracks:", refilteredTracks);
 
+	// Remove undefined
+	refilteredTracks.forEach((track, index) => {
+		if (track === undefined) {
+			refilteredTracks.splice(track[index], 1);
+		}
+	});
+
 	// Map tracks to simpler objects
 	const mappedTracks = refilteredTracks.map(({ id, name, preview_url }) => ({
 		id,

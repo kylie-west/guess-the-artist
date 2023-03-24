@@ -5,11 +5,12 @@ import App from "./App";
 import Card from "./Card";
 import Game from "./Game";
 import Artist from "./Artist";
+import genreList from "./genreList";
 
 export const Landing = props => {
 	const numSongsOptions = [1, 2, 3];
 	const numArtistsOptions = [2, 3, 4];
-    
+
 	// const [selectedGenre, setSelectedGenre] = useState('')
 	// const [selectedSong, setSelectedSong] = useState([
 	//     {title: '1', color:'silver',  id:1},
@@ -26,7 +27,6 @@ export const Landing = props => {
 	//     //props.config.setConfig(e.target.value)
 
 	// }
-    
 
 	return (
 		<Wrapper>
@@ -45,15 +45,13 @@ export const Landing = props => {
 						})
 					}>
 					<option value="" />
-					{props.genres.map(genre => (
+					{genreList.genres.map(genre => (
 						<option key={genre} value={genre}>
 							{genre}
 						</option>
 					))}
-                    
 				</select>
 			</div>
-            
 
 			{/* <h3> Songs per guess</h3>
         <SongSetting>
@@ -88,7 +86,6 @@ export const Landing = props => {
 						key={option}
 						onClick={() =>
 							props.setConfig({ ...props.config, numSongs: option })
-                            
 						}
 						selected={props.config.numSongs === option}>
 						{option}
