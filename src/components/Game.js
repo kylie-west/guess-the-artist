@@ -169,13 +169,6 @@ const Wrapper = styled.div`
 	background-color: #f2f2f2;
 `;
 
-const Wrapper2 = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 50px;
-`;
-
 const WhiteBox = styled.div`
 	background: white;
 	width: 100vw;
@@ -183,9 +176,14 @@ const WhiteBox = styled.div`
 
 const TopBar = styled.div`
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	width: 100%;
 	padding: 5px 20px;
+
+	@media (max-width: 700px) {
+		box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+	}
 `;
 
 const StyledLink = styled(Link)`
@@ -213,7 +211,12 @@ const LivesContainer = styled.div`
 
 const Header = styled.h1`
 	text-align: center;
-	font-size: 30px;
+	font-size: 3rem;
+
+	@media (max-width: 700px) {
+		font-size: 2.4rem;
+		padding: 15px 0;
+	}
 `;
 
 const Songs = styled.div`
@@ -224,20 +227,31 @@ const Songs = styled.div`
 	align-items: center;
 	justify-content: center;
 	padding: 50px 0;
+
+	@media (max-width: 700px) {
+		gap: 20px;
+		padding: 0 0 30px 0;
+	}
 `;
 
 const Artists = styled.div`
 	display: flex;
 	gap: 30px;
 	flex-direction: row;
+	flex-wrap: wrap;
 	align-items: center;
+	justify-content: center;
 	margin-top: 100px;
+
+	@media (max-width: 700px) {
+		margin-top: 30px;
+	}
 `;
 
 const Button = styled.button`
 	min-width: 10rem;
 	padding: 15px;
-	margin-top: 50px;
+	margin: 50px auto;
 	background: rgba(0, 0, 0, 0.1);
 	border: none;
 	border-radius: 4px;
@@ -247,6 +261,10 @@ const Button = styled.button`
 
 	&:hover {
 		background: rgba(0, 0, 0, 0.2);
+	}
+
+	@media (max-width: 700px) {
+		margin: 30px auto;
 	}
 `;
 

@@ -26,8 +26,6 @@ const Song = ({ url, handlePlay, currentPlayer }) => {
 
 	return (
 		<StyledCard
-			width="150px"
-			height="150px"
 			bg="rgba(0, 0, 0, 0.1)"
 			onClick={e => {
 				handleClick(e);
@@ -54,12 +52,19 @@ const Song = ({ url, handlePlay, currentPlayer }) => {
 export default Song;
 
 const StyledCard = styled(Card)`
+	width: 150px;
+	height: 150px;
 	border: none;
 	cursor: pointer;
 	transition: 100ms;
 
 	&:hover {
 		background: rgba(0, 0, 0, 0.2);
+	}
+
+	@media (max-width: 700px) {
+		width: 100px;
+		height: 100px;
 	}
 `;
 
@@ -74,4 +79,8 @@ const PlayButton = styled.button`
 
 const Icon = styled.i`
 	font-size: 30px;
+	color: #2e2e2e;
+	@media (max-width: 700px) {
+		font-size: 25px;
+	}
 `;
