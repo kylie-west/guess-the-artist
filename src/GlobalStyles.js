@@ -12,11 +12,11 @@ const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        font-family: sans-serif;
+        font-family: Cairo, sans-serif;
         line-height: 1.6;
         font-size: 1.6rem;
         background: white;
-        color: #2e2e2e;
+        color: #2e2a3b;
     }
 `;
 

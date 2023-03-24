@@ -125,22 +125,36 @@ export default Landing;
 const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: start;
 	align-items: center;
 	gap: 50px;
+	min-height: 100vh;
 	text-align: center;
 
 	select {
 		padding: 5px 0;
 		margin-top: 10px;
+		font-family: Cairo;
+		font-size: 1.4rem;
+		color: rgb(46, 42, 59);
+
+		@media (max-width: 700px) {
+			margin: 0;
+		}
 	}
 `;
 
 const Header = styled.div`
 	margin-top: 50px;
 
+	h1 {
+		font-family: Audiowide;
+		font-size: 4rem;
+		color: #584a8c;
+	}
+
 	h2 {
-		font-weight: 200;
+		font-weight: 300;
 	}
 `;
 
@@ -163,12 +177,12 @@ const ArtistSetting = styled.div`
 const Button = styled(Link)`
 	display: block;
 	padding: 10px 20px;
-	background: rgba(0, 0, 0, 0.1);
+	background: #735fbf;
 	text-decoration: none;
-	color: inherit;
+	color: white;
 	border-radius: 4px;
 
 	&:hover {
-		background: rgba(0, 0, 0, 0.2);
+		background: #584a8c;
 	}
 `;

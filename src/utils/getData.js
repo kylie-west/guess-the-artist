@@ -52,6 +52,15 @@ export const getArtists = async (token, genre) => {
 		artist => artist.popularity > 50 && artist.name !== "David Guetta"
 	);
 
+	// Exclude non-kpop artists from kpop results (probably need to do more checks like this for other genres)
+	if (genre === "k-pop") {
+		filteredArtists = filteredArtists.filter(artist =>
+			artist.genres.includes(
+				"k-pop" || "k-rap" || "k-pop boy group" || "k-pop girl group"
+			)
+		);
+	}
+
 	const result = filteredArtists.map(artist => ({
 		id: artist.id,
 		name: artist.name,

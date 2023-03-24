@@ -14,6 +14,7 @@ const Artist = ({
 }) => {
 	return (
 		<StyledCard
+			bg="rgba(88, 74, 140, 0.1)"
 			onClick={onClick}
 			selected={selected}
 			className={`${
@@ -45,7 +46,7 @@ const StyledCard = styled(Card)`
 	&:hover {
 		transform: translateY(-3px);
 		box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
-		background-color: rgba(0, 0, 0, 0.2);
+		background-color: rgba(88, 74, 140, 0.2);
 	}
 
 	&.correct {

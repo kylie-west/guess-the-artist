@@ -166,7 +166,7 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	min-height: 100vh;
-	background-color: #f2f2f2;
+	background-color: #f8f8fa;
 `;
 
 const WhiteBox = styled.div`
@@ -252,15 +252,16 @@ const Button = styled.button`
 	min-width: 10rem;
 	padding: 15px;
 	margin: 50px auto;
-	background: rgba(0, 0, 0, 0.1);
+	background: #735fbf;
 	border: none;
 	border-radius: 4px;
+	color: white;
 	font-size: 1.6rem;
 	cursor: pointer;
 	transition: 100ms;
 
 	&:hover {
-		background: rgba(0, 0, 0, 0.2);
+		background: #584a8c;
 	}
 
 	@media (max-width: 700px) {

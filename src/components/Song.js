@@ -19,6 +19,7 @@ const Song = ({ url, handlePlay, currentPlayer }) => {
 			audioRef.current.pause();
 			setIsPlaying(false);
 		} else {
+			audioRef.current.volume = 0.5;
 			audioRef.current.play();
 			setIsPlaying(true);
 		}
@@ -26,7 +27,7 @@ const Song = ({ url, handlePlay, currentPlayer }) => {
 
 	return (
 		<StyledCard
-			bg="rgba(0, 0, 0, 0.1)"
+			bg="rgba(88, 74, 140, 0.1)"
 			onClick={e => {
 				handleClick(e);
 				handlePlay(audioRef.current);
@@ -59,7 +60,7 @@ const StyledCard = styled(Card)`
 	transition: 100ms;
 
 	&:hover {
-		background: rgba(0, 0, 0, 0.2);
+		background: rgba(88, 74, 140, 0.2);
 	}
 
 	@media (max-width: 700px) {
