@@ -1,7 +1,13 @@
 import Artist from "./Artist";
 import React from "react";
 
-const ArtistList = ({ artists, selectedArtist, setSelectedArtist }) => {
+const ArtistList = ({
+	artists,
+	selectedArtist,
+	setSelectedArtist,
+	correctArtist,
+	gameState
+}) => {
 	return (
 		<>
 			{artists.map((artist, index) => (
@@ -13,6 +19,16 @@ const ArtistList = ({ artists, selectedArtist, setSelectedArtist }) => {
 					url={artist.image}
 					key={index}
 					selected={artist === selectedArtist}
+					isCorrectAnswer={
+						gameState === "CORRECT_ANSWER" && artist === selectedArtist
+					}
+					isIncorrectAnswer={
+						gameState === "INCORRECT_ANSWER" && artist === selectedArtist
+					}
+					isRevealedAnswer={
+						gameState === "REVEALED_ANSWER" && artist === correctArtist
+					}
+					gameState={gameState}
 				/>
 			))}
 		</>

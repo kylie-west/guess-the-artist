@@ -8,14 +8,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     html {
-        font-size: 62.5%;
-
-        @media only screen and (max-width: 1200px){
-            font-size: 58%;
-        }
-        @media only screen and (min-width: 1980px){
-            font-size: 70%;
-        }
+        font-size: 10px;
     }
 
     body {

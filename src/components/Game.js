@@ -143,6 +143,7 @@ const Game = ({ token, config }) => {
 						artists={currentArtists}
 						setSelectedArtist={setSelectedArtist}
 						selectedArtist={selectedArtist}
+						correctArtist={correctArtist}
 						gameState={gameState}></ArtistList>
 				</Artists>
 
@@ -199,6 +200,7 @@ const StyledLink = styled(Link)`
 
 const Stats = styled.div`
 	display: flex;
+	align-items: center;
 	gap: 20px;
 	font-weight: 600;
 `;

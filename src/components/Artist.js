@@ -1,11 +1,30 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import Card from "./Card";
 
-const Artist = ({ url, artistName, onClick, selected }) => {
+const Artist = ({
+	url,
+	artistName,
+	onClick,
+	selected,
+	isCorrectAnswer,
+	isIncorrectAnswer,
+	isRevealedAnswer
+}) => {
 	return (
-		<StyledCard onClick={onClick} selected={selected}>
+		<StyledCard
+			onClick={onClick}
+			selected={selected}
+			className={`${
+				isCorrectAnswer
+					? "correct"
+					: isIncorrectAnswer
+					? "incorrect"
+					: isRevealedAnswer
+					? "revealed"
+					: ""
+			}`}>
 			<Img src={url || ""} alt="new" width="250" height="248" />
 			<Name>{artistName}</Name>
 		</StyledCard>
@@ -14,7 +33,6 @@ const Artist = ({ url, artistName, onClick, selected }) => {
 export default Artist;
 
 const StyledCard = styled(Card)`
-	border: none;
 	cursor: pointer;
 	transition: 100ms;
 
@@ -22,6 +40,35 @@ const StyledCard = styled(Card)`
 		transform: translateY(-3px);
 		box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
 		background-color: rgba(0, 0, 0, 0.2);
+	}
+
+	&.correct {
+		border: 2px solid green;
+		&::before {
+			content: "Correct!";
+			display: block;
+			position: absolute;
+			transform: translateY(-165px);
+			color: green;
+		}
+	}
+
+	&.incorrect {
+		border: 2px solid #f24640;
+		&::before {
+			content: "Incorrect :(";
+			display: block;
+			position: absolute;
+			transform: translateY(-165px);
+			color: #f24640;
+		}
+	}
+
+	&.revealed {
+		border: 2px solid black;
+		transform: translateY(-5px);
+		box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
+		transition: 100ms;
 	}
 `;
 
