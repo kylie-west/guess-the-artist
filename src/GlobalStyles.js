@@ -4,10 +4,10 @@ const GlobalStyles = createGlobalStyle`
     * {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
     }
 
     html {
-        box-sizing: border-box;
         font-size: 62.5%;
 
         @media only screen and (max-width: 1200px){
@@ -23,7 +23,7 @@ const GlobalStyles = createGlobalStyle`
         line-height: 1.6;
         font-size: 1.6rem;
         background: #F9F9F9;
-        color: #000;
+        color: #2e2e2e;
     }
 `;
 

@@ -9,12 +9,15 @@ const Card = styled.div`
 	height: ${({ height }) => height || "auto"};
 	margin: ${({ margin }) => margin || "0px"};
 	padding: ${({ padding }) => padding || "0px"};
-	background: ${({ bg }) => bg || "white"};
-	border: 1px solid gray;
+	background: ${({ bg }) => bg || "rgba(0, 0, 0, 0.1)"};
+	background-color: ${({ selected }) => selected && "rgba(0, 0, 0, 0.2)"};
 	border-radius: 4px;
-	${({ selected }) => selected && `
-    background: silver;
-  `}
+	cursor: pointer;
+	transition: 100ms;
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.2);
+	}
 `;
 
 export default Card;

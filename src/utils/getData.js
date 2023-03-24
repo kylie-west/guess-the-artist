@@ -49,13 +49,8 @@ export const getArtists = async (token, genre) => {
 	console.log("Artist data:", data.artists.items);
 
 	let filteredArtists = data.artists.items.filter(
-		artist => artist.popularity > 60
+		artist => artist.popularity > 50 && artist.name !== "David Guetta"
 	);
-	if (filteredArtists.length < 20) {
-		filteredArtists = data.artists.items.filter(
-			artist => artist.popularity > 0
-		);
-	}
 
 	const result = filteredArtists.map(artist => ({
 		id: artist.id,
@@ -105,13 +100,6 @@ export const getSongs = async (token, artist, genre, limit) => {
 	console.log("Filtered tracks:", filteredTracks);
 	console.log("Refiltered tracks:", refilteredTracks);
 
-	// Remove undefined
-	refilteredTracks.forEach((track, index) => {
-		if (track === undefined) {
-			refilteredTracks.splice(track[index], 1);
-		}
-	});
-
 	// Map tracks to simpler objects
 	const mappedTracks = refilteredTracks.map(({ id, name, preview_url }) => ({
 		id,
@@ -120,7 +108,11 @@ export const getSongs = async (token, artist, genre, limit) => {
 		preview_url
 	}));
 	// Get numSongs # of random tracks
-	const tracks = getMultipleRandom(mappedTracks, limit);
+	const randomTracks = getMultipleRandom(mappedTracks, limit);
+
+	// Remove undefined
+	const tracks = randomTracks.filter(track => track !== undefined);
+
 	console.log(tracks);
 	return tracks;
 };

@@ -31,6 +31,17 @@ const App = () => {
 		console.log("config", config);
 	}, [config]);
 
+	const loadGenres = async t => {
+		setConfigLoading(true);
+		const response = await fetchFromSpotify({
+			token: t,
+			endpoint: "recommendations/available-genre-seeds"
+		});
+		console.log(response);
+		setGenres(response.genres);
+		setConfigLoading(false);
+	};
+
 	useEffect(() => {
 		setAuthLoading(true);
 		const storedTokenString = localStorage.getItem(TOKEN_KEY);
@@ -40,6 +51,7 @@ const App = () => {
 				console.log("Token found in localstorage");
 				setAuthLoading(false);
 				setToken(storedToken.value);
+				loadGenres(storedToken.value);
 				return;
 			}
 		}

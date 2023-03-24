@@ -54,10 +54,10 @@ const Game = ({ token, config }) => {
 		// If artists have already been fetched for this session, don't re-fetch
 		let artistsArray;
 		if (!artists.length) {
-			setLoading(true);
+			// setLoading(true);
 			artistsArray = await getArtists(token, selectedGenre, numArtists);
 			setArtists(artistsArray);
-			setLoading(false);
+			// setLoading(false);
 		} else {
 			artistsArray = artists;
 		}
@@ -71,10 +71,10 @@ const Game = ({ token, config }) => {
 		setCorrectArtist(randomArtist);
 
 		// Fetch a selection of songs belonging to the correct artist
-		setLoading(true);
+		// setLoading(true);
 		const songs = await getSongs(token, randomArtist, selectedGenre, numSongs);
 		setSongs(songs);
-		setLoading(false);
+		// setLoading(false);
 	};
 
 	const handleClick = e => {
@@ -119,33 +119,32 @@ const Game = ({ token, config }) => {
 	} else {
 		return (
 			<Wrapper>
-				<TopBar>
-					<Stats>
-						<LivesContainer>
-							Lives: <Lives lives={lives} />
-						</LivesContainer>
-						<div>Score: {score}</div>
-					</Stats>
-					<a>Start over</a>
-				</TopBar>
-				<div>
-					{loading ? (
-						<div>🌀 Loading...</div>
-					) : (
-						<Wrapper2>
-							<Songs>
-								<SongList songs={songs} />
-							</Songs>
+				<WhiteBox>
+					<TopBar>
+						<Stats>
+							<LivesContainer>
+								Lives: <Lives lives={lives} />
+							</LivesContainer>
+							<div>Score: {score}</div>
+						</Stats>
+						<a>Start over</a>
+					</TopBar>
 
-							<Artists>
-								<ArtistList
-									artists={currentArtists}
-									setSelectedArtist={setSelectedArtist}
-									selectedArtist={selectedArtist}></ArtistList>
-							</Artists>
-						</Wrapper2>
-					)}
-				</div>
+					<Header>Who is this?</Header>
+
+					<Songs>
+						<SongList songs={songs} />
+					</Songs>
+				</WhiteBox>
+
+				<Artists>
+					<ArtistList
+						artists={currentArtists}
+						setSelectedArtist={setSelectedArtist}
+						selectedArtist={selectedArtist}
+						gameState={gameState}></ArtistList>
+				</Artists>
+
 				<Button onClick={handleClick}>
 					{gameState === INCORRECT
 						? "Reveal Answer"
@@ -164,7 +163,8 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 50px;
+	min-height: 100vh;
+	background-color: #f2f2f2;
 `;
 
 const Wrapper2 = styled.div`
@@ -174,16 +174,22 @@ const Wrapper2 = styled.div`
 	gap: 50px;
 `;
 
+const WhiteBox = styled.div`
+	background: white;
+	width: 100vw;
+`;
+
 const TopBar = styled.div`
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+	padding: 5px 20px;
 `;
 
 const Stats = styled.div`
 	display: flex;
-	align-items: center;
-	gap: 10px;
+	gap: 20px;
+	font-weight: 600;
 `;
 
 const LivesContainer = styled.div`
@@ -192,24 +198,43 @@ const LivesContainer = styled.div`
 	gap: 5px;
 `;
 
+const Header = styled.h1`
+	text-align: center;
+	font-size: 30px;
+`;
+
 const Songs = styled.div`
 	display: flex;
-	gap: 10px;
+	gap: 50px;
 	flex-direction: row;
+	flex-wrap: wrap;
 	align-items: center;
+	justify-content: center;
+	padding: 50px 0;
 `;
 
 const Artists = styled.div`
 	display: flex;
-	gap: 20px;
+	gap: 30px;
 	flex-direction: row;
 	align-items: center;
+	margin-top: 100px;
 `;
 
 const Button = styled.button`
-	width: fit-content;
-	padding: 10px;
+	min-width: 10rem;
+	padding: 15px;
+	margin-top: 50px;
+	background: rgba(0, 0, 0, 0.1);
+	border: none;
+	border-radius: 4px;
+	font-size: 1.6rem;
 	cursor: pointer;
+	transition: 100ms;
+
+	&:hover {
+		background: rgba(0, 0, 0, 0.2);
+	}
 `;
 
 const Loader = styled.div`
