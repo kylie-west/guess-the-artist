@@ -49,7 +49,10 @@ export const getArtists = async (token, genre) => {
 	console.log("Artist data:", data.artists.items);
 
 	let filteredArtists = data.artists.items.filter(
-		artist => artist.popularity > 50 && artist.name !== "David Guetta"
+		artist =>
+			artist.popularity > 50 &&
+			artist.name !== "David Guetta" &&
+			artist.name !== "SUGA"
 	);
 
 	// Exclude non-kpop artists from kpop results (probably need to do more checks like this for other genres)

@@ -19,7 +19,7 @@ const Song = ({ url, handlePlay, currentPlayer }) => {
 			audioRef.current.pause();
 			setIsPlaying(false);
 		} else {
-			audioRef.current.volume = 0.5;
+			audioRef.current.volume = 0.3;
 			audioRef.current.play();
 			setIsPlaying(true);
 		}
