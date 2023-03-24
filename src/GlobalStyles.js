@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
         font-family: sans-serif;
         line-height: 1.6;
         font-size: 1.6rem;
-        background: #F9F9F9;
+        background: white;
         color: #2e2e2e;
     }
 `;

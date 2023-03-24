@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SongList from "./SongList";
 import Lives from "./Lives";
@@ -127,7 +128,7 @@ const Game = ({ token, config }) => {
 							</LivesContainer>
 							<div>Score: {score}</div>
 						</Stats>
-						<a>Start over</a>
+						<StyledLink to="/">Start Over</StyledLink>
 					</TopBar>
 
 					<Header>Who is this?</Header>
@@ -184,6 +185,16 @@ const TopBar = styled.div`
 	justify-content: space-between;
 	width: 100%;
 	padding: 5px 20px;
+`;
+
+const StyledLink = styled(Link)`
+	text-decoration: none;
+	font-weight: 600;
+	color: inherit;
+
+	&:hover {
+		color: #f24640;
+	}
 `;
 
 const Stats = styled.div`

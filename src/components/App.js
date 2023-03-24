@@ -4,7 +4,6 @@ import fetchFromSpotify, { request } from "../services/api";
 import Game from "./Game";
 import Landing from "./Landing";
 import GameOver from "./GameOver";
-import genreList from "./genreList";
 
 const AUTH_ENDPOINT =
 	"https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
@@ -31,6 +30,7 @@ const App = () => {
 		console.log("config", config);
 	}, [config]);
 
+	// If this is removed, things break
 	const loadGenres = async t => {
 		setConfigLoading(true);
 		const response = await fetchFromSpotify({

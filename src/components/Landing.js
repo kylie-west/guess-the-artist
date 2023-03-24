@@ -30,12 +30,13 @@ export const Landing = props => {
 
 	return (
 		<Wrapper>
-			<h1>Who's Who</h1>
-			<h2>A musical guessing game</h2>
-
-			<h3>Pick a genre</h3>
+			<Header>
+				<h1>Who's Who?</h1>
+				<h2>A musical guessing game</h2>
+			</Header>
 
 			<div>
+				<h3>Pick a genre</h3>
 				<select
 					value={props.config.selectedGenre}
 					onChange={event =>
@@ -78,59 +79,96 @@ export const Landing = props => {
             </div>
         </ArtistSetting> */}
 
-			<h3>Songs per guess</h3>
-			<SongSetting>
-				{numSongsOptions.map(option => (
-					<Card
-						padding="25px"
-						key={option}
-						onClick={() =>
-							props.setConfig({ ...props.config, numSongs: option })
-						}
-						selected={props.config.numSongs === option}>
-						{option}
-					</Card>
-				))}
-			</SongSetting>
-			<h3>Artists per guess</h3>
-			<ArtistSetting>
-				{numArtistsOptions.map(option => (
-					<Card
-						padding="25px"
-						key={option}
-						onClick={() =>
-							props.setConfig({ ...props.config, numArtists: option })
-						}
-						selected={props.config.numArtists === option}>
-						{option}
-					</Card>
-				))}
-			</ArtistSetting>
+			<div>
+				<h3>Songs per guess</h3>
+				<SongSetting>
+					{numSongsOptions.map(option => (
+						<Card
+							width="100px"
+							height="100px"
+							key={option}
+							onClick={() =>
+								props.setConfig({ ...props.config, numSongs: option })
+							}
+							selected={props.config.numSongs === option}>
+							{option}
+						</Card>
+					))}
+				</SongSetting>
+			</div>
 
-			<Link to="/play"> Submit </Link>
+			<div>
+				<h3>Artists per guess</h3>
+				<ArtistSetting>
+					{numArtistsOptions.map(option => (
+						<Card
+							width="100px"
+							height="100px"
+							key={option}
+							onClick={() =>
+								props.setConfig({ ...props.config, numArtists: option })
+							}
+							selected={props.config.numArtists === option}>
+							{option}
+						</Card>
+					))}
+				</ArtistSetting>
+			</div>
+
+			<Button to="/play"> Submit </Button>
 		</Wrapper>
 	);
 };
 
 export default Landing;
 
+const Wrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 50px;
+	text-align: center;
+
+	select {
+		padding: 5px 0;
+		margin-top: 10px;
+	}
+`;
+
+const Header = styled.div`
+	margin-top: 50px;
+
+	h2 {
+		font-weight: 200;
+	}
+`;
+
 const SongSetting = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	width: 20%;
+	gap: 30px;
+	margin-top: 10px;
 `;
 
 const ArtistSetting = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	width: 20%;
+	gap: 30px;
+	margin-top: 10px;
 `;
 
-const Wrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 50px;
+const Button = styled(Link)`
+	display: block;
+	padding: 10px 20px;
+	background: rgba(0, 0, 0, 0.1);
+	text-decoration: none;
+	color: inherit;
+	border-radius: 4px;
+
+	&:hover {
+		background: rgba(0, 0, 0, 0.2);
+	}
 `;
