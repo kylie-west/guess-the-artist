@@ -1,33 +1,30 @@
-Assessment 2
-===============================
-# Overview
+# Who's Who?
 
-For this assessment, students are tasked with developing a front-end React application that interfaces with [Spotify's API](https://developer.spotify.com/) in order to get genre's, artists, and **sample** songs. The user will then be able to listen to songs and guess which artist created it.
+## Project Overview
 
-## Requirements
+This project was completed as part of Cook Systems' FastTrack program. We were provided with a loose set of requirements, an empty React app, and a few helper functions for retrieving an auth token and interacting with the Spotify Web API. All other decisions were left up to us.
 
-##### The *Business Requirements* are located in the [REQUIREMENTS.md](REQUIREMENTS.md) file.
+### Basic Requirements
 
-The specification for this assessment is written in a way that resembles the kind of informal requirements document you may recieve on a client site or the level of detail you may have after a few meetings with stakeholders/product owners. It is written from a non-technical viewpoint with no regards for the technical requirements that the project may incur. 
+- Create a music/artist guessing game
+- The user should be able to play a small selection of songs and guess which artist they belong to
+- The home page should be a configuration page in which the user can select a genre, number of songs, and number of artists to display per round
+- User settings should be persisted between sessions
 
-When given large problems like this, it is easy to try to start coding immediately. This may not be the best approach to solving large problems - it can often make you waste a lot of time because you'll start solving problems before you really know what problems you need to solve. In order to get a sense for what is required technically, it is recommended that you first go through the ***Business Requirements*** thoroughly and try to envision the end goal from a business point of view. After that, go through it again from a technical perspective and begin mapping out mentally and physically (on paper if you'd like) the things you'll need to use and understand. For this project, these things may include: Missing requirements that you need to clarify, Spotify endpoints, A skeleton/wireframe of your components, routes, required business logic for selecting random artists within a genre, how to play a song in the browser, and so on. Note that these things don't require you to start coding - they require you to **research** and **read documentation**.
+## Approach and Gameplay
 
----
+First, we created [a wireframe](https://www.figma.com/file/hYpatH93rKkF34b1tgOn6u/Who's-Who?node-id=0%3A1&t=H6u8Ek3n9Np2YGK5-1) to work out the overall design of the UI and gameplay.
 
-## Technical Guidance
+After configuring their settings on the landing page, the player is taken to the game, where they are presented with a group of songs and a group of artists. All songs belong to one artist, and the goal of the game is to guess which one it is. The player can play each song, and then select which artist they believe is correct.
 
-##### The following will be an unorganized collection of technical information that could be helpful for this assessment.
+When the player answers correctly, their score increases. If the player makes a mistake, they lose one "life." Once they run out of lives, they are taken to a "game over" screen, which displays their final score as well as a button which returns to the landing page.
 
-When debugging or trying to solve problems within the `React` and `JavaScript` ecosystem, it will be helpful to include `react` or `javascript` in your google searches. For example, searching for `web playback javascript` gives me [`howler.js`](https://howlerjs.com/) which seems useful for playing audio. Learning how to *google well* is one of the most important skills to hone as a developer - especially when dealing with a quickly changing ecosystem.
+Rather than limit the number of rounds, we decided to go with an endless game loop, allowing the player to accumulate as many points as they can, as this would maximize replayability.
 
-When getting a `track` from Spotify's API, it gives you a `preview_url` which will be needed to play a **sample** for a given song.
+## The Data
 
-To simplify authenticating with Spotify's API, a skeleton is given which calls a service in the cloud to get a `spotify_access_token`. An example request using this token is provided in the project.
+All artist and track data are fetched from the Spotify Web API via the "/search" endpoint.
 
-`services/api.js` has been provided as a convenience wrapper around `fetch`
+At the beginning of each game, a pool of artists is retrieved based on the player's selected genre. For each round, a randomized subset of the artist list is selected. From this subset, one random artist is chosen to become the "correct artist" for the round.
 
-The code in the `services/api.js` file should not need modification. If you feel that you need to modify it, please speak with an instructor about it first.
-
-URL encoding converts characters into a format that can be transmitted over the Internet. The url encoding for a 'space' character is '%20'.
-
-This assessment is large and you should use your time wisely. UI design and styling should be your LAST priority. Get the majority of the functionality in the application built along with a basic minimal wireframe of your components. Once you've done that and it *works*, begin thinking about a minimal and clean UI. A business/product owner/stakeholder would much rather have something that doesn't look pretty, but works, than have something that looks great but doesn't do anything.
+Next, a list of tracks for the chosen artist is fetched from the API. The list of tracks is then filtered to ensure that each track contains a preview URL, and that their "artists" property actually includes the chosen artist. From this filtered list, a subset of tracks is randomly selected to be displayed for the current round.
