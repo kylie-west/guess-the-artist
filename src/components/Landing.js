@@ -1,32 +1,12 @@
-import { Route, Redirect, Link, Routes } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
-import App from "./App";
-import Card from "./Card";
-import Game from "./Game";
-import Artist from "./Artist";
 import genreList from "./genreList";
+import Card from "./Card";
 
-export const Landing = props => {
+export const Landing = ({ config, setConfig }) => {
 	const numSongsOptions = [1, 2, 3];
 	const numArtistsOptions = [2, 3, 4];
-
-	// const [selectedGenre, setSelectedGenre] = useState('')
-	// const [selectedSong, setSelectedSong] = useState([
-	//     {title: '1', color:'silver',  id:1},
-	//     {title: '2',color:'silver',id:2},
-	//     {title: '3',color:'silver',id:3}
-	// ])
-	// const [clicked, setClicked] = useState(false)
-
-	// const handleInput = (e) =>{
-	//     setClicked(isClicked => !isClicked)
-
-	//     console.log(e.target.value)
-	//     console.log(value)
-	//     //props.config.setConfig(e.target.value)
-
-	// }
 
 	return (
 		<Wrapper>
@@ -38,46 +18,21 @@ export const Landing = props => {
 			<div>
 				<h3>Pick a genre</h3>
 				<select
-					value={props.config.selectedGenre}
+					value={config.selectedGenre}
 					onChange={event =>
-						props.setConfig({
-							...props.config,
+						setConfig({
+							...config,
 							selectedGenre: event.target.value
 						})
 					}>
 					<option value="" />
-					{genreList.genres.map(genre => (
+					{genreList.map(genre => (
 						<option key={genre} value={genre}>
 							{genre}
 						</option>
 					))}
 				</select>
 			</div>
-
-			{/* <h3> Songs per guess</h3>
-        <SongSetting>
-            {selectedSong.map((song) => (
-                <div>
-                    <Card className = {{clicked}}onClick= {handleInput}color ={song.color}padding="25px"> {song.title}</Card>
-                    
-
-
-                </div>
-            ))}
-            
-        </SongSetting>
-        <h3> Artists per guess</h3>
-        <ArtistSetting>
-            <div>
-            <Card padding="25px" bg="silver"> 2</Card>
-            </div>
-            <div>
-            <Card padding="25px" bg="silver"> 3</Card>
-            </div>
-            <div>
-            <Card padding="25px" bg="silver"> 4</Card>
-            </div>
-        </ArtistSetting> */}
 
 			<div>
 				<h3>Songs per guess</h3>
@@ -87,10 +42,8 @@ export const Landing = props => {
 							width="100px"
 							height="100px"
 							key={option}
-							onClick={() =>
-								props.setConfig({ ...props.config, numSongs: option })
-							}
-							selected={props.config.numSongs === option}>
+							onClick={() => setConfig({ ...config, numSongs: option })}
+							selected={config.numSongs === option}>
 							{option}
 						</Card>
 					))}
@@ -105,10 +58,8 @@ export const Landing = props => {
 							width="100px"
 							height="100px"
 							key={option}
-							onClick={() =>
-								props.setConfig({ ...props.config, numArtists: option })
-							}
-							selected={props.config.numArtists === option}>
+							onClick={() => setConfig({ ...config, numArtists: option })}
+							selected={config.numArtists === option}>
 							{option}
 						</Card>
 					))}
