@@ -11,7 +11,7 @@ const Card = styled.div`
 	margin: ${({ margin }) => margin || "0px"};
 	padding: ${({ padding }) => padding || "0px"};
 	background: ${({ bg }) => bg || "rgba(88, 74, 140, 0.1)"};
-	background-color: ${({ selected }) => selected && "rgba(88, 74, 140, 0.2)"};
+	background-color: ${({ selected }) => selected && "rgba(88, 74, 140, 0.22)"};
 	border-radius: 4px;
 	cursor: pointer;
 	transition: 100ms;
