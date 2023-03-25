@@ -43,7 +43,8 @@ export const getArtists = async (token, genre) => {
 			q: `genre:${genre}`,
 			limit: 50,
 			type: "artist",
-			market: "US"
+			market: "US",
+			offset: Math.floor(Math.random() * 20)
 		}
 	});
 	console.log("Artist data:", data.artists.items);
