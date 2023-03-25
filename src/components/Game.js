@@ -134,7 +134,7 @@ const Game = ({ token, config }) => {
 					<Header>Who is this?</Header>
 
 					<Songs>
-						<SongList songs={songs} />
+						<SongList songs={songs} currentArtists={currentArtists} />
 					</Songs>
 				</WhiteBox>
 

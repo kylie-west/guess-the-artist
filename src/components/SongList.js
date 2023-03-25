@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Song from "./Song";
 
-const SongList = ({ songs }) => {
+const SongList = ({ songs, currentArtists }) => {
 	const [currentPlayer, setCurrentPlayer] = useState(null);
 
 	// If a player is currently playing, pause it and set clicked player as currentPlayer
@@ -14,7 +14,7 @@ const SongList = ({ songs }) => {
 
 	useEffect(() => {
 		setCurrentPlayer(null);
-	}, [songs]);
+	}, [songs, currentArtists]);
 
 	return (
 		<>
