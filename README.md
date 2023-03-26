@@ -1,4 +1,4 @@
-# [Who's Who?](https://guesswhoswho.netlify.app/)
+# <a href="https://guesswhoswho.netlify.app/" target="_blank">Who's Who?</a>
 
 ## Project Overview
 
