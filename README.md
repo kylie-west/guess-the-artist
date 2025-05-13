@@ -1,4 +1,4 @@
-# <a href="https://guesswhoswho.netlify.app/" target="_blank">Who's Who?</a>
+# <a href="https://guesswhoswho.netlify.app/" target="_blank">Spotify Guessing Game</a>
 
 ## Project Overview
 
