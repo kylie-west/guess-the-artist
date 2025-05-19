@@ -42,7 +42,7 @@ export const request = (url, options) => {
   return fetch(url, options).then(checkStatus).then(parseJSON);
 };
 
-const fetchFromSpotify = ({ token, endpoint, params }) => {
+export const fetchFromSpotify = ({ token, endpoint, params }) => {
   let url = [SPOTIFY_ROOT, endpoint].join("/");
   if (params) {
     const paramString = toPairs(params)
@@ -54,4 +54,16 @@ const fetchFromSpotify = ({ token, endpoint, params }) => {
   return request(url, options);
 };
 
-export default fetchFromSpotify;
+export const fetchPreviewFromDeezer = async ({ artist, trackTitle }) => {
+  const proxyUrl = "/.netlify/functions/deezer-proxy";
+  const params = new URLSearchParams({ artist, trackTitle });
+  const res = await request(`${proxyUrl}?${params.toString()}`);
+  const track = res.data && res.data.find((item) => item.type === "track");
+
+  if (!track || !track.preview) {
+    console.error(`Deezer: No preview URL found for track: ${trackTitle}`);
+    return null;
+  }
+
+  return track.preview;
+};
