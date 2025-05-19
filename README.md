@@ -1,7 +1,5 @@
 # <a href="https://guesswhoswho.netlify.app/" target="_blank">Spotify Guessing Game</a>
 
-**Notice: As of late 2024, the Spotify Web API no longer provides preview URLs for tracks without user authentication. Unfortunately, that means this app is not functional for the time being.**
-
 ## Project Overview
 
 This project was completed as part of Cook Systems' FastTrack program. We were provided with a loose set of requirements, an empty React app, and a few helper functions for retrieving an auth token and interacting with the Spotify Web API. All other decisions were left up to us.
