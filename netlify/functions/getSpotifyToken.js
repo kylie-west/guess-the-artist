@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-exports.handler = async function () {
+export async function handler() {
   const clientId = process.env.CLIENT_ID;
   const clientSecret = process.env.CLIENT_SECRET;
 
@@ -32,4 +32,4 @@ exports.handler = async function () {
       }),
     };
   }
-};
+}
