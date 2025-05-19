@@ -1,6 +1,6 @@
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 
-export async function handler() {
+exports.handler = async function () {
   const clientId = process.env.CLIENT_ID;
   const clientSecret = process.env.CLIENT_SECRET;
 
@@ -32,4 +32,4 @@ export async function handler() {
       }),
     };
   }
-}
+};

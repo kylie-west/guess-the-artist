@@ -1,6 +1,6 @@
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 
-export async function handler(event, context) {
+exports.handler = async function (event, context) {
   const { artist, trackTitle } = event.queryStringParameters;
 
   if (!artist || !trackTitle) {
@@ -38,4 +38,4 @@ export async function handler(event, context) {
       },
     };
   }
-}
+};
